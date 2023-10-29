@@ -30,7 +30,7 @@ export default function Chat() {
             {messages.length > 0
               ? messages.map(m => (
                 <div key={m.id} className={`whitespace-pre-wrap p-2 rounded mb-2 ${m.role === 'user' ? 'bg-blue-200 text-blue-700 text-right ml-auto' : 'bg-gray-200 text-gray-700 mr-auto'}`}>
-                  <div className="font-bold">{m.role === 'user' ? 'User' : 'AI'}</div>
+                  <div className="font-bold">{m.role === 'user' ? 'Vous' : 'iBrain'}</div>
                   {m.content}
                 </div>
               ))

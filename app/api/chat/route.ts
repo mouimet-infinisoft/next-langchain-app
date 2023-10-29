@@ -1,16 +1,8 @@
 import { StreamingTextResponse, LangChainStream, Message } from 'ai';
 import { ChatOpenAI } from 'langchain/chat_models/openai';
-import { AIMessage, HumanMessage } from 'langchain/schema';
-import {BufferMemory} from 'langchain/memory'
-import {ConversationChain} from 'langchain/chains'
+import { AIMessage, HumanMessage,SystemMessage } from 'langchain/schema';
 
 export const runtime = 'edge';
-// const model = new ChatOpenAI({
-//   streaming: true,
-// });
-// const memory = new BufferMemory();
-// const chain = new ConversationChain({ llm: model, memory: memory });
-
 
 
 export async function POST(req: Request) {
@@ -22,16 +14,15 @@ export async function POST(req: Request) {
     streaming: true,
   });
 
-  // const res1 = await chain.call({ input: messages.at(-1).content },{},);
 
 
   llm
     .call(
-      (messages as Message[]).map(m =>
+      [new SystemMessage({content:"Tu es iBrain, l'intelligence artificielle Si Simple membre de l'équipe chez Infinisoft. Tu réponds aux questions de l'usager au sujet de notre solution logiciel Si Simple."}), ...(messages as Message[]).map(m =>
         m.role == 'user'
           ? new HumanMessage(m.content)
           : new AIMessage(m.content),
-      ),
+      )],
       {},
       [handlers],
     )
